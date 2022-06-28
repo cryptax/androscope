@@ -1,0 +1,146 @@
+ .btn-red1 {	
+     background-color: #ffebee;
+     border-color: #ffebee;
+ }
+
+ .btn-red1:hover {
+     background-color: #ffcdd2;
+     border-color: #ffcdd2;
+ }
+
+ .btn-red2 {	
+     background-color: #ffcdd2;
+     border-color: #ffcdd2;
+ }
+
+ .btn-red2:hover {
+     background-color: #ef9a9a;
+     border-color: #ef9a9a;
+ }
+
+ .btn-red3 {
+     color: white;
+     background-color: #ef9a9a;
+     border-color: #ef9a9a;
+ }
+
+.btn-red3:hover {
+     color: white;
+     background-color: #e57373;
+     border-color: #e57373;
+ }
+
+ .btn-red4 {
+     color: white;
+     background-color: #e57373;
+     border-color: #e57373;
+ }
+
+ .btn-red4:hover {
+     color: white;
+     background-color: #ef5350;
+     border-color: #ef5350;
+ }
+
+.btn-red5 {
+     color: white;
+     background-color: #ef5350;
+     border-color: #ef5350;
+ }
+
+ .btn-red5:hover {
+     color: white;
+     background-color: #f44336;
+     border-color: #f44336;
+ }
+
+ .btn-red6 {
+     color: white;
+     background-color: #f44336;
+     border-color: #f44336;
+ }
+
+ .btn-red6:hover {
+     color: white;
+     background-color: #e53935;
+     border-color: #e53935;
+ }
+
+.btn-red7 {
+     color: white;
+     background-color: #e53935;
+     border-color: #e53935;
+ }
+
+ .btn-red7:hover {
+     color: white;
+     background-color: #d32f2f;
+     border-color: #d32f2f;
+ }
+
+.androred, .btn-red8 {
+     color: white;
+     background-color: #d32f2f;
+     border-color: #d32f2f;
+ }
+
+ .btn-red8:hover {
+     color: white;
+     background-color: #c62828;
+     border-color: #c62828;
+ }
+
+.btn-red9 {
+     color: white;
+     background-color: #c62828;
+     border-color: #c62828;
+}
+
+.androred:hover, .btn-red9:hover {
+	color: white;
+	background-color: #b71c1c;
+	border-color: #b71c1c;
+    }
+
+.btn-red10 {
+     color: white;
+     background-color: #b71c1c;
+     border-color: #b71c1c;
+ }
+
+.btn-red10:hover {
+     color: white;
+     background-color: #ff8a80;
+     border-color: #ff8a80;
+ }
+
+
+
+.btn-red1:focus,
+.btn-red1.focus,
+.btn-red2:focus,
+.btn-red2.focus,
+.btn-red3:focus,
+.btn-red3.focus,
+.btn-red4:focus,
+.btn-red4.focus,
+.btn-red5:focus,
+.btn-red5.focus,
+.btn-red6:focus,
+.btn-red6.focus,
+.btn-red7:focus,
+.btn-red7.focus,
+.btn-red8:focus,
+.btn-red8.focus,
+.btn-red9:focus,
+.btn-red9.focus,
+.btn-red10:focus,
+.btn-red10.focus
+{
+    box-shadow: 0 0 0 .2rem #ffcdd2;
+}
+
+.border-dashed {
+    border-style: dashed !important;
+    border-color: #ffcdd2 !important;
+}

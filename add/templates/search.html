@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block navlink %}
+{% include "menu.html" with activeTab='search' %}
+{% endblock %}
+
+{% block content %}
+<!-- this is search results -->
+<div class="mt-5">
+    <table class="table table-hover">
+	<thead><tr class="table-warning">
+	    <th>SHA256</th>
+	    <th>Malware name</th>
+	</tr></thead>
+	<tbody>
+	    {% for m in malware_list %}
+	    <tr>
+		<td><a href="/add/show/{{ m.sha256 }}"> {{ m.sha256 }}</a></td>
+		<td>{{ m.general_name }} </td>
+		<tr>
+		    {% endfor %}
+	</tbody>
+    </table>
+    {% if malware_list.has_other_pages %}
+    <ul class="pagination">
+	{% if malware_list.has_previous %}
+	<li><a href="?page={{ malware_list.previous_page_number }}">&laquo;</a></li>
+	{% else %}
+	<li class="disabled"><span>&laquo;</span></li>
+	{% endif %}
+	{% for i in malware_list.paginator.page_range %}
+	{% if malware_list.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+	{% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+	{% endif %}
+	{% endfor %}
+	{% if malware_list.has_next %}
+	<li><a href="?page={{ malware_list.next_page_number }}">&raquo;</a></li>
+	{% else %}
+	<li class="disabled"><span>&raquo;</span></li>
+	{% endif %}
+    </ul>
+    {% endif %}
+    
+</div>
+
+<center>
+<button type="button" class="btn" style="background-color: #c62828; color: white;" id="go-back" >Search again</button>
+
+<script>
+ document.getElementById('go-back').addEventListener('click', () => {
+     history.back();
+ });
+</script>
+
+{% endblock content %}
+

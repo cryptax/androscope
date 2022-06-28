@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  androscope:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cryptax/androscope:2022.06
+    container_name: androscope
+    networks:
+      - nginx_network
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - VIRUSTOTAL_APIKEY=${VIRUSTOTAL_APIKEY-}
+      - KOODOUS_APIKEY=${VIRUSTOTAL_APIKEY-}
+      - DJANGO_WEBSITE_FQDN=${DJANGO_WEBSITE_FQDN}
+    volumes:
+      - ${PWD}/db.sqlite3:/androscope/db.sqlite3
+      
+  nginx:
+    image: nginx:latest
+    container_name: nginx_androscope
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./static:/static
+    ports:
+      - "443:443"
+    depends_on:
+      - androscope
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    driver: bridge
+

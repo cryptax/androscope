@@ -1,0 +1,14 @@
+<div class="collapse" id="{{ collapseName }}">
+    <div class="card card-body mb-2 btn-red1">
+	<h2>{{ featureName }}</h2>
+	{% block feature %}
+	{% endblock feature %}
+	
+	<!-- close button -->
+	<div class="text-center">
+	    <a class="btn btn-red8" data-bs-toggle="collapse" href="#{{ collapseName }}" role="button"> Close </a>
+	</div>
+
+    </div>
+</div>
+

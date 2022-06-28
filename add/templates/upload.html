@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block navlink %}
+{% include "menu.html" with activeTab='upload' %}
+{% endblock navlink %}
+
+{% block content %}
+
+{% if not confirm_message == '' %}
+<div class="mx-2 text-center">
+    <form method='post'>
+	{% csrf_token %}
+    <p>
+	{{ confirm_message }}
+    </p>
+    <button type="submit" class="btn btn-success" value="cancel" name="choice" >Cancel</button>
+    <button type="submit" class="btn btn-danger" value="yes" name="choice">I Confirm</button>
+    </form>
+</div>
+{% else %}
+<form method='post' enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row justify-content-center">
+	<div class="text-center col-sm-6 mx-2 p-4 border border-5 border-dashed btn-red4">
+	    <i class='fas fa-bug'></i>
+	    Select an Android malware to upload for analysis
+	    <br>
+	    <br>
+	    <input type="file" name="file" required id="id_file">
+	</div>
+    </div>
+    <div class="mt-2 p-4 text-center">
+	<button type="submit" class="btn androred"><i class='fas fa-upload'></i> Upload!</button>
+    </div>
+</form>
+{% endif %}
+    
+{% if upload_message %}
+<div class="my-4 text-center text-warning bg-dark">
+    >>> {{ upload_message }} <<<
+</div>
+{% endif %}
+    
+<div class="my-4 text-center">
+    <i>To insert a sample, based on its SHA256 hash, without uploading it, <a href="/add/captcha.html?nextstep=insert">go here</a>.</i>
+</div>
+
+{% endblock content %}
+

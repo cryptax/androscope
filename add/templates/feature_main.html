@@ -1,0 +1,38 @@
+{% extends "base_feature.html" %}
+{% load startswith %}
+{% block feature %}
+<div class="container">
+    <div class="row">
+	<div class="col">
+	    <!-- we have form.sha256 for file upload, but not search -->
+	    {% if form.sha256 %}
+	    <label for="{{ form.sha256.id_for_label }}">{{ form.sha256.label }}</label>
+	    {% if form.sha256.value == None %}
+	    <input type="text" name="{{ form.sha256.html_name }}" value="" id="{{ form.sha256.id_for_label }}" placeholder="{{ form.sha256.help_text }}" class="form-control">
+	    {% else %}
+	    <input type="text" name="{{ form.sha256.html_name }}" value="{{ form.sha256.value }}" id="{{ form.sha256.id_for_label }}" placeholder="{{ form.sha256.help_text }}" class="form-control">
+	    {% endif %}
+	    {% endif %}
+
+	    <label for="{{ form.general_name.id_for_label }}">{{ form.general_name.label }}</label>
+	    <input type="text" name="{{ form.general_name.html_name }}" value="{{ form.general_name.value }}" id="{{ form.general_name.id_for_label }}" placeholder="{{ form.general_name.help_text }}" class="form-control">
+
+	    {% for field in form %}
+	    {% if field.html_name|startswith:'common1_' %}
+	    <input class="form-check-input" type="checkbox" value="True" name="{{ field.html_name }}" id="{{ field.id_for_label }}" {% if field.value %}checked{% endif %}>
+	    <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+	    <br>
+	    {% endif %}
+	    {% endfor %}
+	</div>
+	<div class="col">
+	    {% for field in form %}
+	    {% if field.html_name|startswith:'common2_' %}
+	    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+	    <input type="text" class="form-control tagin" value="{{ field.value }}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" placeholder="Enter a comma-separated list of tags." data-transform="input => input.toLowerCase()" />
+	    {% endif %}
+	    {% endfor %}
+	</div>
+    </div>
+</div>    
+{% endblock %}

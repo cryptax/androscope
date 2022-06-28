@@ -1,0 +1,40 @@
+{% load is_in_group %}
+{% if activeTab == 'view' %}
+{% if request.user|is_in_group:"reviewer" %}
+<a class="nav-link active" href="/add/view/">Review</a>
+{% else %}
+<a class="nav-link active" href="/add/view/">View</a>
+{% endif %}
+{% else %}
+{% if request.user|is_in_group:"reviewer" %}
+<a class="nav-link" href="/add/view/">Review</a>
+{% else %}
+<a class="nav-link" href="/add/view/">View</a>
+{% endif %}
+{% endif %}
+{% if activeTab == 'search' %}
+<a class="nav-link active" href="/add/search/">Search</a>
+{% else %}
+<a class="nav-link" href="/add/search/">Search</a>
+{% endif %}
+{% if activeTab == 'upload' %}
+<a class="nav-link active" href="/add/captcha.html?nextstep=upload">Upload</a>
+{% else %}
+<a class="nav-link" href="/add/captcha.html?nextstep=upload">Upload</a>
+{% endif %}
+{% if activeTab == 'insert' %}
+<a class="nav-link active" href="/add/captcha.html?nextstep=insert">Insert</a>
+{% else %}
+<a class="nav-link" href="/add/captcha.html?nextstep=insert">Insert</a>
+{% endif %}
+{% if activeTab == 'about' %}
+<a class="nav-link active" href="/add/about/">About</a>
+{% else %}
+<a class="nav-link" href="/add/about/">About</a>
+{% endif %}
+{% if user.is_authenticated %}
+<a class="nav-link active" href="/secure-maintenance/password_change/">Change password</a>
+<a class="nav-link active" href="/secure-maintenance/logout/">Logout {{ user.get_username }}</a>
+{% endif %}
+
+
