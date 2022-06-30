@@ -1,0 +1,29 @@
+{% extends "base_feature.html" %}
+{% load startswith %}
+{% block feature %}
+<p>Is the sample obfuscated? (not including packers)</p>
+{% for field in form %}
+{% if field.html_name == "obfuscation_yes" %}
+<div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" value="True" name="{{ field.html_name }}"  id="{{ field.id_for_label }}" onclick="javascript:showObfuscation();" {%if field.value%}checked{% endif %}> 
+    <label class="form-check-label" for="{{ field.id_for_label }}">
+	{{ field.label }}
+    </label>
+</div>
+{% endif %}
+{% if field.html_name == "obfuscation_junkcode" or field.html_name == "obfuscation_encryption" %}
+<br>
+<div class="form-check" id="div_{{ field.id_for_label }}" style="display:none">
+    <input class="form-check-input" type="checkbox" value="True" name="{{ field.html_name }}" id="{{ field.id_for_label }}" {%if field.value%}checked{% endif %}>
+    <label class="form-check-label" for="{{ field.id_for_label }}">
+	{{ field.label }}
+    </label>
+</div>
+{% endif %}
+{% if field.html_name == "obfuscation_name" %}
+<div id="div_{{ field.id_for_label }}" style="display:none">
+    {{ field }}
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}

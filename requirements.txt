@@ -1,0 +1,6 @@
+Django==3.2.5
+django-simple-captcha
+gunicorn
+python-magic
+requests
+virustotal-python

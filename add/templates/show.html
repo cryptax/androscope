@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block navlink %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% load is_in_group %}
+
+{% block content %}
+<div class="mt-5 text-center">
+
+    <!-- Beware we need to reference SHA256 and not sha256 here because it is the name of the label... -->
+    {% if request.user|is_in_group:"reviewer" or  request.user|is_in_group:"poweruser" %}
+    <a class="btn btn-red8 mb-5" href="/edit/{{ sample.SHA256 }}">Edit</a>
+    <br>
+    {% endif %}
+    
+    <table class="table table-hover">
+	<tbody>
+	    {% for key, value in sample.items %}
+	    <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+	    {% endfor %}
+	    {% for key, value in properties.items %}
+	    <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+	    {% endfor %}
+	</tbody>
+
+    </table>
+</div>
+
+
+{% endblock content %}
+

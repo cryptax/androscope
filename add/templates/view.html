@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block navlink %}
+{% include "menu.html" with activeTab='view' %}
+{% endblock %}
+
+{% block content %}
+{% load startswith %}
+{% load is_in_group %}
+<div class="mt-5 text-center">
+    <i>
+	{{ message }}
+    </i>
+</div>
+<div class="mt-5">
+    {% if request.user|is_in_group:"reviewer" %}
+    <form method="post">
+	{% csrf_token %}
+	<div class="text-center mb-5">
+	    <button type="submit" class="btn btn-outline-danger btn-lg">Validate Review</button>
+	</div>
+	{% endif %}	  
+	
+	<table class="table table-hover" style="table-layout: fixed">
+	    <thead><tr class="table-warning">
+		<th>SHA256</th><th>Malware name</th><th>Filename</th><th>Date</th>
+		{% if reviewer %}
+		<th>Reviewer validation</th>
+		{% endif %}
+	    </tr></thead>
+	    <tbody>
+		{% for item in query_results %}
+		<tr>
+		    {% if item.malware.to_check and not reviewer %}
+		    <td style="overflow: hidden; text-overflow: ellipsis;" class="notreviewed"><a style="color: gray; font-style: italic; font-size: 80%" href="/add/show/{{ item.malware.sha256 }}">
+			{{ item.malware.sha256 }}</a></td>
+		    <td style="overflow: hidden; text-overflow: ellipsis; color: gray; font-size: 80%; font-style: italic;">To be reviewed</td>
+		    <td style="overflow: hidden; text-overflow: ellipsis; color: gray; font-size: 80%; font-style: italic;">{{ item.malware.filename }}</td>
+		    <td style="color: gray; font-size: 80%; font-style: italic;">{{ item.malware.insertion_date }}</td>
+		    {% else %}
+		    <td style="overflow: hidden; text-overflow: ellipsis;"><a class="not-reviewed" href="/add/show/{{ item.malware.sha256 }}">
+			{{ item.malware.sha256 }}</a></td>
+		    <td style="overflow: hidden; text-overflow: ellipsis;">{{ item.general_name }}</td>
+		    <td style="overflow: hidden; text-overflow: ellipsis;">{{ item.malware.filename }}</td>
+		    <td>{{ item.malware.insertion_date }}</td>
+		    {% endif %}
+		    {% if reviewer %}
+		    <td>
+			{% if item.malware.to_check %}
+			<div class="form-check form-switch text-start">
+			    <input class="form-check-input" type="checkbox" name="{{ item.malware.sha256 }}" value="False" id="{{ item.malware.sha256 }}">
+			    <label class="form-check-label" for="{{ item.malware.sha256 }}">Yes, I have checked: this is OK</label>
+			</div>
+			{% else %}
+			<i>Review already done</i>
+			{% endif %}
+		    </td>
+		    {% endif %}
+		</tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{%  if request.user|is_in_group:"reviewer" %}
+    </form>
+    {% endif %}
+
+
+{% if query_results.has_other_pages %}
+  <ul class="pagination">
+    {% if query_results.has_previous %}
+      <li><a href="?page={{ query_results.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in query_results.paginator.page_range %}
+      {% if query_results.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if query_results.has_next %}
+      <li><a href="?page={{ query_results.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+</div>
+{% endblock content %}
+

@@ -1,0 +1,26 @@
+{% extends "base_feature.html" %}
+{% load startswith %}
+{% block feature %}
+<div class="container">
+    <div class="row">
+	<div class="col">
+	    <p>Does the malware implement malicious features in other languages than Java?</p>
+
+	    {% for field in form %}
+	    {% if field.html_name|startswith:'lang1_' %}
+	    <input class="form-check-input" type="checkbox" name="{{ field.html_name }}" value="True" id="{{ field.id_for_label }}" {%if field.value%}checked{% endif %}>
+	    <label class="form-check-label" for="{{ field.id_for_label }}">
+		{{ field.label }}
+	    </label>
+	    <br>
+	    {% endif %}
+	    {% if field.html_name == "lang_other" %}
+	    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+	    <input type="text" class="form-control tagin" value="{{ field.value }}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" placeholder="Enter a comma-separated list of tags." data-transform="input => input.toLowerCase()" />
+	    <br>
+	    {% endif %}
+	    {% endfor %}
+	</div>
+    </div>
+</div>
+{% endblock %}

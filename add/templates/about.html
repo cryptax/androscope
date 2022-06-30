@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block navlink %}
+{% include "menu.html" with activeTab='about' %}
+{% endblock %}
+
+
+{% block content %}
+<div class="mt-5">
+    <h1><i class="fas fa-bullseye"></i> Motivation</h1>
+    <p style="text-align:center; font-size: 200%; font-style: italic;">
+	"Please send SHA256 of sample using a native packer"
+    </p>
+
+    <p>
+        Although there are several such samples, you'll probably waste hours trying to find such a sample again. 
+        There are so many Android (several millions), it is difficult to spot one in particular.
+        This is what Androscope is for.
+    </p>
+
+    <p>
+	<b>Androscope keeps track of malicious features</b> for each sample, and offers the possibility to quickly search among them.
+    For example, you can easily search a malware which implement Anti-Frida techniques, or a malware which turns off the ringer etc. 
+    <br>
+    Each new entry in androscope consists in a list of implemented features. 
+    The list is extensible by the use of several keyword fields. 
+    <br>
+    Note that Androscope does not store / keep any malware: only their hash and list of features.
+    
+    </p>
+
+    <h1 class="mt-5"><i class="fas fa-address-card"></i> Contact</h1>
+    <p>
+	Please contact <b>@cryptax</b> for any information.
+    <br>
+    <i class="fas fa-handshake"></i> Kudos to Jeremy P for his help on Django :)
+    <br>
+    Please note Androscope is a <i>research tool</i> meant for malware analysts, not a <i>product</i>.
+    </p>
+
+
+
+    <h1 class="mt-5"><i class="fas fa-wrench"></i> More...</h1>
+    Want to learn how to use Androscope? Have any other question? <br>
+    There's an online documentation and FAQ <a href="https://cryptax.medium.com/androscope-5ab588ec5b3">here</a>
+
+
+    
+
+</div>
+{% endblock content %}	

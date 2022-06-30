@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block navlink %}
+{% include "menu.html" with activeTab='view' %}
+{% endblock %}
+
+{% load is_in_group %}
+
+{% block content %}
+<div class="mt-5 text-center">
+    {% if user.is_authenticated %}
+    <div class="mx-3 btn-red1">
+    Hello <i>{{ user.get_username }}</i> !<br>
+
+    <p>
+	{% if request.user|is_in_group:"reviewer" %}
+	You are a <b>Reviewer</b>, i.e you can review entries submitted by <i>newcomers</i> to check their properties seem correct.
+	{% elif request.user|is_in_group:"poweruser" %}
+	You are a <b>Power User</b>, i.e your submissions are <i>de facto</i> trusted to be valid and do not need to be reviewed by a <i>reviewer</i>. They immediately appear in Androscope.
+	{% else %}
+	You are a <i>Newcomer</i> in Androscope. We welcome you!
+	<br>
+	All your entries will be flagged as "to be checked" by a <i>Reviewer</i>.
+	At first, you won't see your entries in Androscope, but a reviewer will.
+	The reviewer will possibly edit and help you with your submission and validate it.
+	Once validated, your entry will be visible to all.
+	{% endif %}
+    </p>
+    </div>
+    {% endif %}
+
+    {% if messages %}
+    <div class="mx-3 btn-red1">
+	    {% for message in messages %}
+	    {{ message }} <br>
+	    {% endfor %}
+    </div>
+    {% endif %}
+    <p>
+	Androscope is a <i class="fas fa-book"></i> <b>collaborative Android malware encyclopedia</b>.<br>
+	You can search for malware <i class="fas fa-bug"></i> based on <i>what they do</i>, and if you are a <i>reverse engineer</i> you can contribute and add new entries to the encyclopedia.
+    </p>
+    <p style="font-style: italic;">
+	Examples:<br>
+	List Android malware that listen to outgoing calls <i class="fas fa-phone-volume"></i>,
+	or which steal cryptocurrencies <i class="fab fa-bitcoin"></i>,
+	or packed malware <i class="fas fa-archive"></i>, etc!
+    </p>
+    <p>
+	<i class="fas fa-exclamation-triangle"></i> <b>Important</b>: Androscope does <b>not</b> store any malware (only their hashes and list of features they implement). 
+    </p>
+    
+</div>
+{% endblock content %}

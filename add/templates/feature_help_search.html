@@ -1,0 +1,38 @@
+<div class="collapse" id="help">
+    <div class="card card-body mb-2 btn-red1">
+	<h2>Help - Searching for malware</h2>
+	<div class="container">
+	    <div class="row">
+		<div class="col">
+		    <h4 class="mt-3">Is it possible to search malware by name?</h4>
+			Yes. Select the <b>Main</b> category, then specify malware name in the Malware Name field.
+
+		    <h4 class="mt-3">How to search malware by SHA256?</h4>
+			Select the <b>Main</b> category, then specify the desired SHA256 hash.
+
+		    <h4 class="mt-3">Combining features</h4>
+		    If you select <b>multiple features</b>, an <b>AND</b> operator is automatically applied between them.
+		    <br>
+		    Currently, you cannot apply an OR or specify complex operations.
+
+		    <p>
+			<b>Example:</b>
+			<br>
+			To search for malware which intercept incoming SMS, click on the toggle button "SMS", then select "Intercept incoming SMS", finally press button "Finished - Submit" to start the search.
+			<br>
+			If you select "keylogger" (main category) and "some (or all) malicious parts are implemented in a native library" (native), Androscope searches for a malware which implements a keylogger and uses a native library.
+		    </p>
+
+		    <h4 class="mt-3">What does the "anything else" feature mean in the Main category?</h4>
+		    If there is no specific feature for what you want to search, this is the category to use.
+		    
+		</div>
+	    </div>
+	</div>
+	<!-- close button -->
+	<div class="text-center">
+	    <a class="btn btn-red8" data-bs-toggle="collapse" href="#help" role="button"> Close </a>
+	</div>
+    </div>
+</div>
+

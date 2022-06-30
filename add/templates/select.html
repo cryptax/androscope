@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block navlink %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load startswith %}
+{% load is_in_group %}
+<link rel="stylesheet" href="{% static 'tagin.min.css' %}" />
+<script src="{% static 'tagin.min.js' %}"></script>
+<script type="text/javascript">
+ function showPacked() {
+     /* if the user clicks on "the sample is packed" we show more options concerning the packer */
+     if (document.getElementById('id_packer_yes').checked) {
+	 document.getElementById('div_id_packer_inmemory').style.display = 'block';
+	 document.getElementById('div_id_packer_native').style.display = 'block';
+	 document.getElementById('div_id_packer_name').style.display = 'block';
+     }
+     else {
+	 document.getElementById('div_id_packer_inmemory').style.display = 'none';
+	 document.getElementById('div_id_packer_native').style.display = 'none';
+         document.getElementById('div_id_packer_name').style.display = 'none';	
+     }								   
+ }
+
+ function showObfuscation() {
+     if (document.getElementById('id_obfuscation_yes').checked) {
+	 document.getElementById('div_id_obfuscation_junkcode').style.display = 'block';
+	 document.getElementById('div_id_obfuscation_encryption').style.display = 'block';
+	 document.getElementById('div_id_obfuscation_name').style.display = 'block';
+     }
+     else {
+	 document.getElementById('div_id_obfuscation_junkcode').style.display = 'none';
+	 document.getElementById('div_id_obfuscation_encryption').style.display = 'none';
+	 document.getElementById('div_id_obfuscation_name').style.display = 'none';
+     }
+ }
+</script>
+
+{% load startswith %}
+
+
+
+    
+    <!-- show a summary of the sample -->
+    <div class="mt-5 text-center">
+	<p>
+	    <i>{{ message }}</i>
+	</p>
+
+	<table class="table">
+	    <tbody>
+		<!-- we have sample for file upload or insert, but not for search  -->
+		{% if sample %}
+		<tr><td>SHA256</td><td>{{ sample.sha256 }}</td></tr>
+		<tr><td>Filename</td><td>{{ sample.filename }}</td></tr>
+		<tr><td>Date</td><td>{{ sample.insertion_date }}</td></tr>
+		{% endif %}
+	    </tbody>
+	</table>
+
+
+	{% if form.errors %}
+	<div class="alert alert-danger">
+	    {% for field in form %}
+	    {% for error in field.errors %}
+	    {{ field.label }} : {{ error|escape }}
+	    {% endfor %}
+	    {% endfor %}
+	</div>
+	{% endif %}
+
+	<!-- toggle buttons -->
+	<p>
+	    {% for b in toggle_categories %}
+	    <a class="btn {{ b.color }}" data-bs-toggle="collapse" href="#{{ b.name }}" role="button" aria-expanded="false" aria-controls="{{ b.name }}">
+		{{ b.label }}
+	    </a>
+	    {% endfor %}
+	    <a class="btn androred" data-bs-toggle="collapse" href="#help" role="button" role="button"  aria-expanded="false" aria-controls="help">Help</a>
+	</p>
+	
+	{% if mode == 'search' %}
+	<p class="lead fw-normal" >
+	    Select feature(s) you want to search for in the relevant categories by clicking on the toggle buttons above. 
+	</p>
+	<p class="fw-lighter">
+	    Example: to search for malware which intercept incoming SMS,
+	    click on the toggle button "SMS",
+	    then select "Intercept incoming SMS", 
+	   finally press button "Finished - Submit" to start the search.<br>
+	</p>
+	<p>
+	    <b>Note</b>: the search applies only applies to reviewed samples. Samples to be reviewed do not appear in search results. Also, you can search for several features. The operator <i>AND</i> is automatically applied between each selected feature.
+	</p>
+
+	{% else %}
+	<p>
+	    Based on your reverse engineering of the sample, please select feature(s) you know the malware implements.
+	    Features are grouped in categories: click on the toggle buttons above to explore categories.
+	</p>
+	{% if request.user|is_in_group:"poweruser" %}
+	<p>You are a <b>Power User</b>.</p>
+	{% elif request.user|is_in_group:"reviewer" %}
+	<p>You are a <b>Reviewer</b></p>
+	{% else %}
+	<div class="card card-body mb-2 btn-red3">
+	    Your entries won't appear immediately in Androscope. <br>They will first need to be reviewed.
+	</div>
+	{% endif %}
+	{% if prefilled_features %}
+	<div class="card card-body mb-2 btn-red3">
+	<b>Androscope has automatically filled suggestions in the following fields. Please check they are appropriate:</b>
+	    <ul>
+		{% for f in prefilled_features %}
+		<li>{{ f }}</li>
+		{% endfor %}
+	    </ul>
+	</div>
+	{% endif %}
+	{% endif %}
+
+	<!-- submit button -->
+	<p>
+	    <form method='post' action="">
+		{% csrf_token %}
+		{% if  mode == 'search' %}
+		<a href="/search/" class="btn btn-outline-secondary btn-lg">Clear search form</a>
+		{% endif %}
+
+		<button type="submit" class="btn btn-outline-danger btn-lg">Finished - Submit</button>
+	</p>
+
+    </div>
+
+    {% include "feature_main.html" with collapseName='collapseMain' featureName='Common Malicious Features' %}
+    {% include "feature_col1.html" with collapseName='collapseSms' featureName='SMS' featureTag='sms_' %}
+    {% include "feature_col1.html" with collapseName='collapseCalls' featureName='Phone calls' featureTag='call_' %}
+    {% include "feature_privacy.html" with collapseName='collapsePrivacy' featureName='Privacy' %}
+    {% include "feature_network.html" with collapseName='collapseNetwork' featureName='Network' %}
+    {% include "feature_packer.html" with collapseName='collapsePacker' featureName='Packers' %}
+    {% include "feature_obfuscation.html" with collapseName='collapseObfuscation' featureName='Obfuscation' %}
+    {% include "feature_col1.html" with collapseName='collapseNative' featureName='Native execution' featureTag='native_' %}
+    {% include "feature_anti.html" with collapseName='collapseAnti' featureName='Anti-reversing' %}
+    {% include "feature_lang.html" with collapseName='collapseLang' featureName='Programming language' %}
+    {% if mode == 'search' %}
+    {% include "feature_help_search.html" %}
+    {% else %}
+    {% include "feature_help.html" %}
+    {% endif %}
+    
+</form>
+<script>
+ for (const el of document.querySelectorAll('.tagin')) {
+     tagin(el)
+ }
+</script>
+
+{% endblock content %}
+

@@ -1,0 +1,28 @@
+{% extends "base_feature.html" %}
+{% load startswith %}
+{% block feature %}
+{% for field in form %}
+{% if field.html_name == "packer_yes" %}
+<div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" name="{{ field.html_name }}" value="True" id="{{ field.id_for_label }}" onclick="javascript:showPacked();" {%if field.value%}checked{% endif %}> 
+    <label class="form-check-label" for="{{ field.id_for_label }}">
+	{{ field.label }}
+    </label>
+</div>
+{% endif %}
+{% if field.html_name == "packer_inmemory" or field.html_name == "packer_native" %}
+<br>
+<div class="form-check" id="div_{{ field.id_for_label }}" style="display:none">
+    <input class="form-check-input" type="checkbox" name="{{ field.html_name }}" value="True" id="{{ field.id_for_label }}" {%if field.value%}checked{% endif %}>
+    <label class="form-check-label" for="{{ field.id_for_label }}">
+	{{ field.label }} <i class="far fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ field.help_text }}"></i>
+    </label>
+</div>
+{% endif %}
+{% if field.html_name == "packer_name" %}
+<div id="div_{{ field.id_for_label }}" style="display:none">
+    {{ field }}
+</div>
+{% endif %}
+{% endfor %}
+{% endblock %}
