@@ -6,14 +6,15 @@ This is the source code for [Androscope](https://androscope.fortinet-cse.com).
 - Online instance (beta): [here](https://androscope.fortinet-cse.com)
 - Documentation: [here](https://cryptax.medium.com/androscope-5ab588ec5b3)
 
+*This project is an open-source beta research project. It is not "official" nor a product.*
+
 # Running the server
 
 
 ## Locally
 
-Modify `./androscope/settings.py` and set `DEBUG = True`.
-
-Then, install requirement in your Python virtual environment, and finally run the server (inside the Python venv):
+- Modify `./androscope/settings.py` and set `DEBUG = True`.
+- Install requirement in your Python virtual environment, and finally run the server (inside the Python venv):
 
 ```
 python manage.py runserver
@@ -29,7 +30,6 @@ python manage.py runserver
 
 ## Database
 
-
 - To create the super user in Django Admin: `python3 manage.py createsuperuser`
 - To reset the database, move `db.sqlite3` to another name (backup). Then, re-apply migrations, and create super user.
 
@@ -42,6 +42,6 @@ python manage.py runserver
 
 # Code
 
-- `./add`: where most features are implemented
-- `./androscope`: main Django project
-- `./nginx`: I use Gunicorn as *Web Server Gateway Interface* (WSGI) server to run the Python web app, Androscope. And I use Nginx to forward requests to Gunicorn on port 8000. You can use something else ;)
+- `./add`: Django application. This is where most features are implemented
+- `./androscope`: main Django project.
+- `./nginx`: I use Nginx as *reverse proxy* to pass incoming requests to Gunicorn. Then I use Gunicorn as *Web Server Gateway Interface* (WSGI) server to run the Python web app, Androscope. You can use something else ;)

@@ -20,7 +20,7 @@ DEBUG = False
 
 if DEBUG:
     print("DEBUG MODE: Do not forget to use DJANGO_SECRET_KEY for deploy environment")
-    SECRET_KEY = 'ThisIsJustATestKeyDontUse1tForDepl0Y'
+    SECRET_KEY = 'SET_THIS_KEY_YOURSELF_DONT_USE_FOR_DEPLOY'
 else:
     print("PRODUCTION MODE")
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
