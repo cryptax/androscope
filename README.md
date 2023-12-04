@@ -3,10 +3,9 @@
 Androscope is a Django project to search malware by features they offer/implement.
 This is the source code for [Androscope](https://androscope.fortinet-cse.com).
 
-- Online instance (beta): [here](https://androscope.fortinet-cse.com)
 - Documentation: [here](https://cryptax.medium.com/androscope-5ab588ec5b3)
 
-*This project is an open-source beta research project. It is not "official" nor a product.*
+*This project is an open-source beta research project. It is not "official" nor a product. The online instance has been closed due to little community use (apart me).*
 
 # Running the server
 
